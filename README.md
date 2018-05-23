@@ -2,7 +2,7 @@
 
 一款采用RecyclerView的横向翻页网格布局控件，支持自定义行和列。自带翻页指示器。重要的是数据横向排列。
 ![3x4效果图](https://res.bigkoo.com/horizontalgridpage3x4Demo.gif)
-![1x1效果图](https://res.bigkoo.com/horizontalgridpage3x4Demo.gif)
+![1x1效果图](https://res.bigkoo.com/horizontalgridpage1x1Demo.gif)
 
 
 
@@ -94,8 +94,8 @@ pageView.setAdapter(adapter);
 
 ## 六、注意事项
 
-1、通过position获取数据时，data对象需要从adapter.getData().get(position)来获取。
-2、整个控件都可以不指定高度自动计算。
+* 1、通过position获取数据时，data对象需要从adapter.getData().get(position)来获取。
+* 2、整个控件都可以不指定高度自动计算。
 
 
 ## 七、版本

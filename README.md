@@ -1,49 +1,48 @@
-# PageGridView
-
-## 介绍
+## 一、介绍
 
 一款采用RecyclerView的横向翻页网格布局控件，支持自定义行和列。自带翻页指示器。重要的是数据横向排列。
-![效果图](https://res.bigkoo.com/PageGridView/PageGridView.gif)
+![3x4效果图](https://res.bigkoo.com/horizontalgridpage3x4Demo.gif)
+![1x1效果图](https://res.bigkoo.com/horizontalgridpage3x4Demo.gif)
 
 
-此控件的数据排列顺序做了调整。
-下图为Android默认的数据排列方式
-![原始排列](https://res.bigkoo.com/PageGridView/1.png)
 
-下图为优化后的数据排列方式，更符合我们日常。
+## 二、数据排列方式
+
 ![转换排列](https://res.bigkoo.com/PageGridView/2.png)
 
 
 
-## 文件说明
+## 三、文件说明
 
-* PageGridRecyclerView   网格页面
-* PageIndicatorView   翻页指示器
-* PageGridAdapter   页面适配器
-* PageBuilder   参数构建器
-* CallBack   回调处理
+* HorizontalGridPage---横向网格页面
+* PageGridView---------网格视图
+* PageIndicatorView----翻页指示器
+* PageGridAdapter------页面适配器
+* PageBuilder----------参数构建器
+* PageCallBack---------回调处理
 
 
 
-## 选项配置
+## 四、选项配置
 
-* 自定义行和列
+* 自定义网格（行数、列数）
 * 自定义页面边距
-* 自定义数据排列方向
+* 是否显示指示器
 * 自定义指示器大小
 * 自定义指示器间隔
 * 自定义指示器图片
-* 自定义翻页有效距离
+* 自定义指示器位置
+* 自定义滑动翻页百分比
 
 
 
-## 用法
+## 五、用法
 
 **引入**
 
 Gradle方式：
 ```java
-implementation 'com.bigkoo:pagegridrecyclerview:1.1'
+implementation 'com.bigkoo:horizontalgridpage:1.0'
 ```
 
 或者
@@ -52,63 +51,58 @@ Maven方式：
 ```java
 <dependency>
   <groupId>com.bigkoo</groupId>
-  <artifactId>pagegridrecyclerview</artifactId>
-  <version>1.1</version>
+  <artifactId>horizontalgridpage</artifactId>
+  <version>1.0</version>
   <type>pom</type>
 </dependency>
 ```
 
 布局文件
 ```java
-    <com.bigkoo.pagegridview.PageGridRecyclerView
-        android:id="@+id/recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="300dp" />
-
-    <com.bigkoo.pagegridview.PageIndicatorView
-        android:id="@+id/indicator"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp" />
+<com.bigkoo.horizontalgridpage.HorizontalGridPage
+    android:id="@+id/pageView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
 ```
 
 ```java
 // 构建参数
 PageBuilder pageBuilder = new PageBuilder.Builder()
-	.setGrid(3, 4)//设置网格
-	.setPageMargin(5)//页面边距
-	.setIndicatiorMargins(5)//设置指示器间隔
-	.setIndicatorSize(15)//设置指示器大小
-	.setIndicatorBackground(android.R.drawable.presence_online,
-			android.R.drawable.presence_invisible)//设置指示器图片资源
-	.setDataOrientation(PageGridAdapter.Orientation.HORIZONTAL)//设置数据排列方向
-	.setSwipePageDistance(50)//设置翻页滑动距离百分比（1-100）
-	.build();
+            .setGrid(1, 1)//设置网格
+            .setPageMargin(0)//页面边距
+            .setIndicatorMargins(5, 5, 5, 5)//设置指示器间隔
+            .setIndicatorSize(10)//设置指示器大小
+            .setIndicatorRes(android.R.drawable.presence_invisible,
+                    android.R.drawable.presence_online)//设置指示器图片资源
+            .setIndicatorGravity(Gravity.CENTER)//设置指示器位置
+            .setSwipePercent(50)//设置翻页滑动距离百分比（1-100）
+            .setShowIndicator(true)//设置显示指示器
+            .build();
 ```
 
 ```java
-        //从XML加载网格视图
-        PageGridRecyclerView pageGridRecyclerView = findViewById(R.id.recyclerview);
-        //网格页面初始化配置
-        pageGridRecyclerView.init(pageBuilder);
-        //从XML加载指示器
-        PageIndicatorView pageIndicatorView = findViewById(R.id.indicator);
-        //指示器初始化配置
-        pageIndicatorView.init(pageBuilder);
-        //网格页面加入指示器
-        pageGridRecyclerView.setIndicator(pageIndicatorView);
+HorizontalGridPage pageView = findViewById(R.id.pageView);
+pageView.init(pageBuilder);
+
+// Activity implements PageCallBack
+PageGridAdapter adapter = new PageGridAdapter<>(this);
+adapter.init(pageBuilder);
+adapter.setData(data);
+pageView.setAdapter(adapter);
 ```
 
 
-## 注意事项
+## 六、注意事项
 
-1、通过position获取数据时，如果设置数据排列方向为横向，data对象需要从adapter.getData().get(position)来获取；如果数据排列方向为纵向，可以直接data.get(position)获取。
+1、通过position获取数据时，data对象需要从adapter.getData().get(position)来获取。
+2、整个控件都可以不指定高度自动计算。
 
-## 版本
 
-当前版本：v1.2
+## 七、版本
 
-更新说明(2018-5-20)：
-* 支持设置翻页距离
+当前版本：v1.0
 
-[版本历史](https://github.com/Bigkoo/PageGridRecyclerView/wiki/版本更新历史)
+更新说明：
+* 发布版本v1.0
+
+[版本更新说明](https://github.com/Bigkoo/HorizontalGridPage/wiki/版本更新说明)
